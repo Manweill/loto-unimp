@@ -82,5 +82,8 @@ $uni-background-color: linear-gradient(to bottom, #6699ea 0%, #fff 100%);
 .safe-area-container {
   // #ifdef MP-WEIXIN
   padding-top: calc(var(--status-bar-height) + 4rem);
+  height: calc(100vh - var(--status-bar-height) - 4rem);
+  display:flex;
+  flex-direction: column;
   // #endif
 }

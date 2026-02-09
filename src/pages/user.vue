@@ -5,8 +5,8 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 </script>
 
 <template>
-  <div class="gradient-bg">
-    <view class="flex-col flex items-center justify-end h-[30vh]">
+  <view class="safe-area-container gradient-bg justify-center">
+    <view class="flex-col flex items-center justify-end flex-1">
       <view class="size-16 rounded-full bg-gray-200 justify-center items-center flex">
         <image v-if="avatarURL" :src="avatarURL" class="size-16 rounded-full" />
         <text v-else class="font-bold text-lg">
@@ -20,7 +20,7 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
         {{ account }}
       </text>
     </view>
-    <view class="gap-4 flex flex-col mt-4">
+    <view class="gap-4 flex flex-col mt-4 flex-1">
       <view class="!rounded-xl px-1 overflow-hidden bg-gray-50 mx-4">
         <uni-list class="!bg-transparent">
           <uni-list-item class="!bg-transparent" show-arrow title="操作手册" />
@@ -29,11 +29,13 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
           <uni-list-item class="!bg-transparent" show-arrow title="关于我们" />
         </uni-list>
       </view>
-      <button class="!mx-4 !bg-gray-50 !rounded-full !border-gray-50 !border-none">
-        退出登录
-      </button>
+      <view class="flex flex-1 flex-col items-center justify-end px-4">
+        <button plain :border="false" class="!mx-4 !bg-gray-100 !rounded-full !border-gray-100 w-full">
+          退出登录
+        </button>
+      </view>
     </view>
-  </div>
+  </view>
 </template>
 
 <style scoped lang="scss">

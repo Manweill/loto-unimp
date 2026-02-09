@@ -1,0 +1,23 @@
+// --- BLE UUID 配置 ---
+const SERVICE_UUID = '0000FFE0-0000-1000-8000-00805F9B34FB'
+const CHAR_WRITE_UUID = '0000FFE1-0000-1000-8000-00805F9B34FB'// Write
+const CHAR_NOTIFY_UUID = '0000FFE4-0000-1000-8000-00805F9B34FB'// Notify
+const CLIENT_CHARACTERISTIC_CONFIG = '00002902-0000-1000-8000-00805F9B34FB' // CCCD Descriptor
+
+export const BLE_CONSTS = {
+  /** 蓝牙服务ID */
+  SERVICE_UUID,
+  /** 蓝牙通知UUID */
+  CHAR_NOTIFY_UUID,
+  /** 蓝牙写入UUID */
+  CHAR_WRITE_UUID,
+  /** 设备特征描述特征描述 */
+  CLIENT_CHARACTERISTIC_CONFIG,
+} as const
+
+export const BLE_CMD = {
+  /** 解锁 */
+  UNLOCK: 0x33,
+  /** 恢复闭锁 */
+  FORCE_LOCK: 0x34,
+}

@@ -6,7 +6,8 @@
 type _LocationUrl =
   "/pages/index" |
   "/pages/tasks" |
-  "/pages/user";
+  "/pages/user" |
+  "/pages-sub/device-lock";
 
 interface NavigateToOptions {
   url: _LocationUrl;
