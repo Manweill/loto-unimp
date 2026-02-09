@@ -7,7 +7,12 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 <template>
   <div class="gradient-bg">
     <view class="flex-col flex items-center justify-end h-[30vh]">
-      <wd-avatar :src="avatarURL" size="large" class="bg-gray-200" icon="user" />
+      <view class="size-16 rounded-full bg-gray-200 justify-center items-center flex">
+        <image v-if="avatarURL" :src="avatarURL" class="size-16 rounded-full" />
+        <text v-else class="font-bold text-lg">
+          {{ name.substring(0, 1) }}
+        </text>
+      </view>
       <text class="text-lg mt-2">
         {{ name }}
       </text>
@@ -16,15 +21,17 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
       </text>
     </view>
     <view class="gap-4 flex flex-col mt-4">
-      <wd-cell-group border insert>
-        <wd-cell title="操作手册" value="" />
-        <wd-cell title="隐私声明" value="" />
-        <wd-cell title="意见反馈" value="" />
-        <wd-cell title="关于我们" value="" />
-      </wd-cell-group>
-      <wd-button type="default" block class="!mx-4 !bg-gray-50 !rounded-lg">
+      <view class="!rounded-xl px-1 overflow-hidden bg-gray-50 mx-4">
+        <uni-list class="!bg-transparent">
+          <uni-list-item class="!bg-transparent" show-arrow title="操作手册" />
+          <uni-list-item class="!bg-transparent" show-arrow title="隐私声明" />
+          <uni-list-item class="!bg-transparent" show-arrow title="意见反馈" />
+          <uni-list-item class="!bg-transparent" show-arrow title="关于我们" />
+        </uni-list>
+      </view>
+      <button class="!mx-4 !bg-gray-50 !rounded-full !border-gray-50 !border-none">
         退出登录
-      </wd-button>
+      </button>
     </view>
   </div>
 </template>

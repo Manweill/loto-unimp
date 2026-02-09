@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import lockImg from '@/static/lock.png'
 import nfcImg from '@/static/nfc.png'
 
-const current = ref({ currentIndex: 0 })
+const current = ref(0)
 const tabs = ref(['全部', '我的', '共享'])
 
 const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
@@ -38,11 +38,6 @@ const devices = ref([
   },
 ])
 
-function onClickItem(vvv) {
-  current.value = vvv
-//   animate(scope.current, { translateX: `${100 * vvv.currentIndex}%` })
-}
-
 function onItemPress(device: any) {
   uni.navigateTo({ url: `/pages-sub/device-lock?id=${device.id}` })
 }
@@ -50,7 +45,7 @@ function onItemPress(device: any) {
 
 <template>
   <view class="fixed-gradient-bg" />
-  <view class="container flex flex-col pt-4">
+  <view class="safe-area-container  flex flex-col pt-4">
     <view class="flex justify-between px-4 items-center h-16">
       <view class="flex gap-4 items-center">
         <image :src="avatarURL" class="size-14 rounded-full" />
@@ -63,22 +58,15 @@ function onItemPress(device: any) {
           </text>
         </view>
       </view>
-      <button type="info" plain class="!bg-[#667eea3f]" icon="add">
+      <button type="primary" class="!bg-[#518DE8FF] !border-none m-0">
         添加设备
       </button>
     </view>
-
-    <view class="p-2 mx-8 !bg-gray-50/35 rounded-full pos-relative">
-      <view
-        class="pos-absolute h-74% -z-1 w-32% bg-gray-50 rounded-full"
-        :style="`transform: translateX(${100 * current.currentIndex}%)`"
-      />
-
-      <uni-segmented-control
-        :values="tabs"
-        style-type="text"
-        class="segmented"
-        @click-item="onClickItem"
+    <view class="w-80vw flex flex-col px-4">
+      <segmented-control
+        v-model="current"
+        :tabs="tabs"
+        class="mt-8 mx-3"
       />
     </view>
     <view class="gap-2 flex flex-col">
@@ -86,13 +74,9 @@ function onItemPress(device: any) {
 
       <view class="content flex justify-center">
         <view class="gap-4 flex flex-wrap justify-stretch w-[98vw] p-4">
-          <view
-            v-for="device in devices"
-            :key="device.id"
-            :title="device.name"
-          >
+          <block v-for="device in devices" :key="device.id">
             <view
-              class="card bg-gray-100"
+              class="card bg-gray-100/35"
               @click="onItemPress(device)"
             >
               <view
@@ -124,7 +108,7 @@ function onItemPress(device: any) {
                 </view>
               </view>
             </view>
-          </view>
+          </block>
         </view>
       </view>
     </view>
@@ -146,13 +130,6 @@ function onItemPress(device: any) {
     z-index: -1;
 }
 
-.segmented {
-    ::v-deep .segmented-control__item--text {
-        border-width: 0 !important;
-        border-color: transparent !important;
-    }
-}
-
 .content {
     line-height: 120px;
     text-align: center;
@@ -160,10 +137,11 @@ function onItemPress(device: any) {
 
 .card {
     width: calc(48vw - 1.5rem);
-    height: 30vw;
-    /* background-color: ; */
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #a9c5f340;
+    border-width: 2px;
+    border-style: solid;
+    //box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;

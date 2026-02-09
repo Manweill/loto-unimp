@@ -78,3 +78,9 @@ $uni-font-size-paragraph: 15px;
 $uni-nav-height: 56px;
 
 $uni-background-color: linear-gradient(to bottom, #6699ea 0%, #fff 100%);
+
+.safe-area-container {
+  // #ifdef MP-WEIXIN
+  padding-top: calc(var(--status-bar-height) + 4rem);
+  // #endif
+}

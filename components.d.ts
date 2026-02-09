@@ -7,7 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    SegmentedControl: typeof import('./src/components/segmented-control.vue')['default']
+    UniBadge: typeof import('@dcloudio/uni-ui/lib/uni-badge/uni-badge.vue')['default']
     UniCard: typeof import('@dcloudio/uni-ui/lib/uni-card/uni-card.vue')['default']
+    UniIcons: typeof import('@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue')['default']
+    UniList: typeof import('@dcloudio/uni-ui/lib/uni-list/uni-list.vue')['default']
+    UniListItem: typeof import('@dcloudio/uni-ui/lib/uni-list-item/uni-list-item.vue')['default']
+    UniLoadMore: typeof import('@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.vue')['default']
     UniSegmentedControl: typeof import('@dcloudio/uni-ui/lib/uni-segmented-control/uni-segmented-control.vue')['default']
+    UniTag: typeof import('@dcloudio/uni-ui/lib/uni-tag/uni-tag.vue')['default']
   }
 }
