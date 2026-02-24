@@ -2,42 +2,7 @@
 import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 import dayjs from 'dayjs'
 import { computed, onMounted, ref } from 'vue'
-
-// 用户列表
-// 用户头像链接使用 github 的头像
-// 名字使用中国名字，如张三李四王五等，升成 10 个人
-const users = ref([
-  {
-    id: 'user1',
-    name: '张三',
-    avatar: 'https://avatars.githubusercontent.com/u/1?v=4',
-  },
-  {
-    id: 'user2',
-    name: '李四',
-    avatar: undefined,
-  },
-  {
-    id: 'user3',
-    name: '王五',
-    avatar: 'https://avatars.githubusercontent.com/u/3?v=4',
-  },
-  {
-    id: 'user4',
-    name: '赵六',
-    avatar: 'https://avatars.githubusercontent.com/u/4?v=4',
-  },
-  {
-    id: 'user5',
-    name: '孙七',
-    avatar: 'https://avatars.githubusercontent.com/u/5?v=4',
-  },
-  {
-    id: 'user6',
-    name: '周八',
-    avatar: undefined,
-  },
-])
+import { users } from '@/common/mock-data'
 
 const tabs = ref<string[]>(['全部', '执行中', '已结束'])
 
@@ -83,8 +48,8 @@ async function requestTasks() {
       startTime: dayjs().add(-Math.random() * 100 % 3, 'day').format('YYYY-MM-DD HH:mm'),
       endTime,
       isExpired,
-      creator: users.value[Math.floor(Math.random() * users.value.length)],
-      joiners: users.value.filter(() => Math.random() * 100 % 3 <= 1),
+      creator: users[Math.floor(Math.random() * users.length)],
+      joiners: users.filter(() => Math.random() * 100 % 3 <= 1),
     }
   }))
 
@@ -98,8 +63,9 @@ onMounted(() => {
 
 <template>
   <view class="fixed-gradient-bg" />
+  <uni-nav-bar background-color="transparent" class="bg-transparent" :border="false" status-bar />
   <view class="safe-area-container flex flex-col pt-4">
-    <view class="flex items-center justify-between px-4 h-16">
+    <view class="flex items-center justify-between px-4">
       <text class="text-xl">
         任务列表
       </text>
@@ -114,10 +80,15 @@ onMounted(() => {
         class="mt-8 mx-3"
       />
     </view>
-
     <view class="flex flex-col gap-4 my-4 !bg-transparent p-4">
       <!-- 渲染列表 -->
-      <uni-card v-for="task in filterTasks" :key="task.id" class="!bg-gray-50/85 card" is-full :is-shadow="false">
+      <uni-card
+        v-for="task in filterTasks"
+        :key="task.id"
+        class="!bg-gray-50/85 card"
+        is-full
+        :is-shadow="false"
+      >
         <text class="font-bold text-base text-gray-800">
           {{ task.title }}
         </text>
@@ -174,7 +145,10 @@ onMounted(() => {
               <uni-tag mark :type="task.status === '执行中' ? 'primary' : 'success'" :text="task.status" />
               <uni-tag v-if="task.status === '执行中'" mark :type="task.isExpired ? 'error' : 'success'" :text="task.isExpired ? '已过期' : '生效中' " />
             </view>
-            <button type="primary" class="px-4 py-2 text-xs rounded-full mx-0">
+            <button
+              type="primary" class="px-4 py-2 text-xs rounded-full mx-0"
+              @click="uni.navigateTo({ url: `/pages-sub/task-detail?id=${task.id}&title=${task.title}` })"
+            >
               查看详情
             </button>
           </view>
@@ -186,6 +160,13 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.card {
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .fixed-gradient-bg {
   position: fixed;
   top: 0;
@@ -194,12 +175,5 @@ onMounted(() => {
   height: 100vh;
   background: linear-gradient(to bottom, #a9c5f3 0%, #fff 100%);
   z-index: -1;
-}
-
-.card {
-  border-radius: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 </style>

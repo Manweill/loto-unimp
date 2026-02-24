@@ -5,7 +5,7 @@ import bgLock from '@/static/bg-lock3.png'
 const { bleState, onStart } = useBle({ deviceId: '12323A6E-D871-2448-B08F-74B5BEA7BE94' })
 // #endif
 
-function handleBack() {
+function navigateBack() {
   uni.navigateBack({})
 }
 
@@ -21,16 +21,21 @@ function showNfcModel() {
 </script>
 
 <template>
+  <uni-nav-bar background-color="transparent" :border="false" status-bar fixed @click-left="navigateBack">
+    <template #left>
+      <view class="i-lucide:chevron-left text-gray-900 size-7" />
+    </template>
+  </uni-nav-bar>
+  <view class="bg pos-absolute top-0">
+    <image :src="bgLock" class="w-full h-full" mode="aspectFill" />
+  </view>
   <view class="safe-area-container pos-relative">
-    <view class="bg pos-absolute top-0">
-      <image :src="bgLock" class="w-full h-full" mode="aspectFill" />
-    </view>
     <view class="flex flex-col items-center justify-start h-full">
       <text class="text-lg mt-4">
         设备锁2
       </text>
       <view class="flex flex-row w-full h-[26vh]">
-        <view class="flex flex-1 pl-4 flex-col gap-4 justify-center">
+        <view class="flex flex-1 pl-6 flex-col gap-4 justify-center">
           <view class="flex flex-col">
             <text class="text-[0.725rem] text-gray-500">
               电量

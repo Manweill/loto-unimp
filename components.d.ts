@@ -7,13 +7,19 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    NavBar: typeof import('./src/components/nav-bar.vue')['default']
     SegmentedControl: typeof import('./src/components/segmented-control.vue')['default']
     UniBadge: typeof import('@dcloudio/uni-ui/lib/uni-badge/uni-badge.vue')['default']
     UniCard: typeof import('@dcloudio/uni-ui/lib/uni-card/uni-card.vue')['default']
+    UniCollapse: typeof import('@dcloudio/uni-ui/lib/uni-collapse/uni-collapse.vue')['default']
+    UniCollapseItem: typeof import('@dcloudio/uni-ui/lib/uni-collapse-item/uni-collapse-item.vue')['default']
+    UniGrid: typeof import('@dcloudio/uni-ui/lib/uni-grid/uni-grid.vue')['default']
+    UniGridItem: typeof import('@dcloudio/uni-ui/lib/uni-grid-item/uni-grid-item.vue')['default']
     UniIcons: typeof import('@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue')['default']
     UniList: typeof import('@dcloudio/uni-ui/lib/uni-list/uni-list.vue')['default']
     UniListItem: typeof import('@dcloudio/uni-ui/lib/uni-list-item/uni-list-item.vue')['default']
     UniLoadMore: typeof import('@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.vue')['default']
+    UniNavBar: typeof import('@dcloudio/uni-ui/lib/uni-nav-bar/uni-nav-bar.vue')['default']
     UniSegmentedControl: typeof import('@dcloudio/uni-ui/lib/uni-segmented-control/uni-segmented-control.vue')['default']
     UniTag: typeof import('@dcloudio/uni-ui/lib/uni-tag/uni-tag.vue')['default']
   }

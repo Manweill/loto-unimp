@@ -45,6 +45,7 @@ function onItemPress(device: any) {
 
 <template>
   <view class="fixed-gradient-bg" />
+  <uni-nav-bar background-color="transparent" class="bg-transparent" :border="false" status-bar />
   <view class="safe-area-container  flex flex-col pt-4">
     <view class="flex justify-between px-4 items-center h-16">
       <view class="flex gap-4 items-center">
@@ -58,8 +59,8 @@ function onItemPress(device: any) {
           </text>
         </view>
       </view>
-      <button type="primary" class="!bg-[#518DE8FF] !border-none m-0">
-        添加设备
+      <button type="primary" class="!bg-[#518DE8FF] !border-none m-0 text-base px-4 py-2">
+        添加任务
       </button>
     </view>
     <view class="w-80vw flex flex-col px-4">
@@ -121,15 +122,14 @@ function onItemPress(device: any) {
 }
 
 .fixed-gradient-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(to bottom, #a9c5f3 0%, #fff 100%);
-    z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #a9c5f3 0%, #fff 100%);
+  z-index: -1;
 }
-
 .content {
     line-height: 120px;
     text-align: center;

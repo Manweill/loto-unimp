@@ -5,7 +5,8 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 </script>
 
 <template>
-  <view class="safe-area-container gradient-bg justify-center">
+  <view class="fixed-gradient-bg" />
+  <view class="safe-area-container justify-center">
     <view class="flex-col flex items-center justify-end flex-1">
       <view class="size-16 rounded-full bg-gray-200 justify-center items-center flex">
         <image v-if="avatarURL" :src="avatarURL" class="size-16 rounded-full" />
@@ -29,7 +30,7 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
           <uni-list-item class="!bg-transparent" show-arrow title="关于我们" />
         </uni-list>
       </view>
-      <view class="flex flex-1 flex-col items-center justify-end px-4">
+      <view class="flex flex-1 flex-col items-center justify-end px-4 p-2">
         <button plain :border="false" class="!mx-4 !bg-gray-100 !rounded-full !border-gray-100 w-full">
           退出登录
         </button>
@@ -39,9 +40,13 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 </template>
 
 <style scoped lang="scss">
-.gradient-bg {
+.fixed-gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: linear-gradient(to bottom, #a9c5f3 0%, #fff 100%);
-  min-height: calc(100vh - $uni-nav-height);
-  padding: 0 1rem;
+  z-index: -1;
 }
 </style>

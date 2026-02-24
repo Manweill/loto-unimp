@@ -21,6 +21,10 @@ export default defineUniPages({
           path: 'device-lock',
           type: 'page',
         },
+        {
+          path: 'task-detail',
+          type: 'page',
+        },
       ],
     },
   ],
