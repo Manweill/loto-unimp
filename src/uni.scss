@@ -87,5 +87,5 @@ $uni-background-color: linear-gradient(to bottom, #6699ea 0%, #fff 100%);
   //height: calc(100vh - var(--status-bar-height) - 4rem);
   // #endif
 
-  height: calc(100vh - var(--status-bar-height));
+  min-height: calc(100vh - var(--status-bar-height));
 }

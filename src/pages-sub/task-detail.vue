@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TTask } from '@/common/mock-data'
+import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
 import { users } from '@/common/mock-data'
@@ -15,11 +17,12 @@ const open = ref(false)
 const endTime = dayjs().add(Math.random() * 100 % 3, 'day').format('YYYY-MM-DD HH:mm')
 const isExpired = dayjs().isBefore(endTime)
 
-const task = ref({
+const task = ref<TTask>({
   creator: {},
-
   joiners: [],
-})
+} as any)
+
+const state = ref<'loading' | 'more' | 'noMore'>('loading')
 
 onMounted(async () => {
   task.value = {
@@ -36,7 +39,15 @@ onMounted(async () => {
   // 加载完数据后再展开面板
   setTimeout(() => {
     open.value = true
-  }, 50)
+  }, 100)
+})
+
+onLoad(() => {
+  // requestTasks()
+})
+
+onReachBottom(async () => {
+  // await requestTasks()
 })
 </script>
 
@@ -52,27 +63,41 @@ onMounted(async () => {
     </template>
   </uni-nav-bar>
   <view class="fixed-gradient-bg" />
-  <view class="safe-area-container p-4 gap-col-6 flex-col">
-    <view class="flex">
-      <text class="font-bold text-lg text-gray-800">
+  <view class="safe-area-container p-4 gap-col-6 flex-col scroll-auto ">
+    <view class="flex justify-center">
+      <text class="font-bold text-lg text-gray-900">
         {{ task.title }}
       </text>
     </view>
     <view
-      class="!bg-gray-50/85 card p-4 mt-6 gap-y-4"
+      class="!bg-gray-50/85 card p-4 mt-4 gap-y-4"
     >
+      <view class="flex justify-between">
+        <view class="flex gap-2 items-center">
+          <view class="size-10 rounded-full bg-gray-200 justify-center items-center flex">
+            <image v-if="task.creator.avatar" :src="task.creator.avatar" class="size-10 rounded-full" />
+            <text v-else class="font-bold text-lg">
+              {{ task.creator.name.substring(0, 1) }}
+            </text>
+          </view>
+          <text class="font-bold text">
+            {{ task.creator.name }}
+          </text>
+        </view>
+        <view class="gap-2 justify-right py-2 flex">
+          <uni-tag mark :type="task.status === '执行中' ? 'primary' : 'success'" :text="task.status" />
+          <uni-tag v-if="task.status === '执行中'" mark :type="task.isExpired ? 'error' : 'success'" :text="task.isExpired ? '已过期' : '生效中' " />
+        </view>
+      </view>
+      <view class="w-full h-[0.125rem] rounded-full bg-gray-400" />
       <view class="flex justify-between gap-2">
         <text class="text-base text-gray-900 text-center">
           {{ task.startTime }}
         </text>
-        <view class="i-lucide:arrow-left-right self-center" />
+        <view class="i-lucide:arrow-left-right self-center mx-2" />
         <text class="text-base text-gray-900 text-center">
           {{ task.endTime }}
         </text>
-      </view>
-      <view class="flex gap-2">
-        <uni-tag mark :type="task.status === '执行中' ? 'primary' : 'success'" :text="task.status" />
-        <uni-tag v-if="task.status === '执行中'" mark :type="task.isExpired ? 'error' : 'success'" :text="task.isExpired ? '已过期' : '生效中' " />
       </view>
     </view>
     <uni-collapse class="card mt-6 !bg-gray-50/85">
@@ -107,9 +132,40 @@ onMounted(async () => {
       </uni-collapse-item>
     </uni-collapse>
 
-    <text class="text-sm text-gray-700 mt-6">
-      锁具列表
-    </text>
+    <!--    <text class="text-sm text-gray-700 mt-6 ml-4"> -->
+    <!--      锁具列表 -->
+    <!--    </text> -->
+    <uni-list class="rounded-2xl overflow-hidden  mt-6">
+      <uni-list-item v-for="(index) in Array.from({ length: 6 })" :key="index" class="items-center" thumb="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhwwTe2HiTapsMX-qZNcYw-CAA_1-KhnatA&s" thumb-size="lg">
+        <template #header>
+          <image class="size-12 mr-2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhwwTe2HiTapsMX-qZNcYw-CAA_1-KhnatA&s" mode="widthFix" />
+        </template>
+        <!-- 自定义 body -->
+        <template #body>
+          <view class="flex flex-1 flex-col">
+            <text class="text-base text-gray-900">
+              锁1
+            </text>
+            <text class="text-xs text-gray-700">
+              斗门区/白藤街道/五洲家园
+            </text>
+          </view>
+        </template>
+        <!-- 自定义 footer -->
+        <template #footer>
+          <view class="flex-row items-center flex">
+            <button
+              size="mini"
+              type="primary"
+              hover-class="is-hover"
+            >
+              解锁
+            </button>
+          </view>
+        </template>
+      </uni-list-item>
+    </uni-list>
+    <uni-load-more class="mt-4" :state="state" />
   </view>
 </template>
 
@@ -124,7 +180,7 @@ onMounted(async () => {
   z-index: -1;
 }
 .card {
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;

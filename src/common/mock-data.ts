@@ -33,3 +33,14 @@ export const users = [
     avatar: undefined,
   },
 ]
+
+export interface TTask {
+  id: string
+  title: string
+  status: '执行中' | '已结束'
+  startTime: string
+  endTime: string
+  isExpired: boolean
+  creator: typeof users[0]
+  joiners: typeof users[0][]
+}
