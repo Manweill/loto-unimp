@@ -64,13 +64,13 @@ onMounted(() => {
 <template>
   <view class="fixed-gradient-bg" />
   <uni-nav-bar background-color="transparent" class="bg-transparent" :border="false" status-bar />
-  <view class="safe-area-container flex flex-col pt-4">
+  <view class="safe-area-tab-container flex flex-col pt-4">
     <view class="flex items-center justify-between px-4">
       <text class="text-xl">
         任务列表
       </text>
-      <button type="primary" class="!bg-[#518DE8FF] !border-none m-0 text-base px-4 py-2">
-        添加任务
+      <button class="!bg-transparent !p-0 !m-0 text-base rounded-full" @click="console.log('1231231')">
+        <view class="i-lucide:circle-plus size-9 text-gray-50" />
       </button>
     </view>
     <view class="w-80vw flex flex-col px-4">

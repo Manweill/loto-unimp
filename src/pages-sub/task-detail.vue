@@ -77,16 +77,18 @@ onReachBottom(async () => {
           <view class="size-10 rounded-full bg-gray-200 justify-center items-center flex">
             <image v-if="task.creator.avatar" :src="task.creator.avatar" class="size-10 rounded-full" />
             <text v-else class="font-bold text-lg">
-              {{ task.creator.name.substring(0, 1) }}
+              {{ task.creator.name?.substring(0, 1) }}
             </text>
           </view>
           <text class="font-bold text">
             {{ task.creator.name }}
           </text>
         </view>
-        <view class="gap-2 justify-right py-2 flex">
-          <uni-tag mark :type="task.status === '执行中' ? 'primary' : 'success'" :text="task.status" />
-          <uni-tag v-if="task.status === '执行中'" mark :type="task.isExpired ? 'error' : 'success'" :text="task.isExpired ? '已过期' : '生效中' " />
+        <view class="flex flex-col items-center justify-center">
+          <view class="flex gap-2">
+            <uni-tag mark :type="task.status === '执行中' ? 'primary' : 'success'" :text="task.status" />
+            <uni-tag mark :type="task.isExpired ? 'error' : 'success'" :text="task.isExpired ? '已过期' : '生效中' " />
+          </view>
         </view>
       </view>
       <view class="w-full h-[0.125rem] rounded-full bg-gray-400" />

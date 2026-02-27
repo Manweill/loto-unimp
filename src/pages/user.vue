@@ -6,7 +6,7 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 
 <template>
   <view class="fixed-gradient-bg" />
-  <view class="safe-area-container justify-center">
+  <view class="safe-area-tab-container justify-center h-80vh">
     <view class="flex-col flex items-center justify-end flex-1">
       <view class="size-16 rounded-full bg-gray-200 justify-center items-center flex">
         <image v-if="avatarURL" :src="avatarURL" class="size-16 rounded-full" />
