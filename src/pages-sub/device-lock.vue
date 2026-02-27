@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useBle } from '@/common/useBle'
 import bgLock from '@/static/bg-lock3.png'
-// #ifdef MP-WEIXIN
+
 const { bleState, onStart } = useBle({ deviceId: '12323A6E-D871-2448-B08F-74B5BEA7BE94' })
-// #endif
 
 function navigateBack() {
   uni.navigateBack({})
@@ -14,9 +13,7 @@ function handleBackHome() {
 }
 
 function showNfcModel() {
-  // #ifdef MP-WEIXIN
   onStart()
-  // #endif
 }
 </script>
 

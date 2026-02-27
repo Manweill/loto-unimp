@@ -4,13 +4,13 @@ import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
 import { users } from '@/common/mock-data'
-import { useRoute } from '@/common/useRoute'
+import { useLoad } from '@/common/useLoad'
 
 function navigateBack() {
   uni.navigateBack({})
 }
 
-const { params } = useRoute()
+const { params } = useLoad()
 
 const open = ref(false)
 

@@ -1,17 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { reactive, ref } from 'vue'
+import { ab2hex } from '@/common/protocol-common'
 import { BLE_CMD, BLE_CONSTS } from './protocol-ble'
-
-// ArrayBuffer转16进度字符串示例
-function ab2hex(buffer: number[]) {
-  const hexArr = Array.prototype.map.call(
-    new Uint8Array(buffer),
-    (bit) => {
-      return (`00${bit.toString(16)}`).slice(-2)
-    },
-  )
-  return hexArr.join('')
-}
 
 export function useBle(args: { deviceId: string } | undefined) {
   const bleState = reactive({
@@ -21,7 +11,7 @@ export function useBle(args: { deviceId: string } | undefined) {
   })
 
   const devices = ref<Map<string, UniApp.BluetoothDeviceInfo>>(new Map())
-
+  // #ifdef MP-WEIXIN
   function onStart() {
     uni.openBluetoothAdapter({
       services: [BLE_CONSTS.SERVICE_UUID],
@@ -47,9 +37,28 @@ export function useBle(args: { deviceId: string } | undefined) {
     })
   }
 
+  function unlock() {
+    if (!bleState.isOpened || !bleState.isConnected || !args?.deviceId) {
+      console.error('[BLE] 蓝牙未打开或设备ID为空')
+      return
+    }
+    uni.writeBLECharacteristicValue({
+      deviceId: args.deviceId,
+      serviceId: BLE_CONSTS.SERVICE_UUID,
+      characteristicId: BLE_CONSTS.CHAR_WRITE_UUID,
+      value: new Uint8Array([BLE_CMD.UNLOCK]).buffer as any,
+      success() {
+        console.warn('[BLE] 发送指令成功')
+      },
+      fail(err) {
+        console.error('[BLE] 发送指令失败', err)
+      },
+    })
+  }
+
   uni.onBluetoothDeviceFound((res) => {
     res.devices.forEach((device) => {
-      console.warn('[BLE] 发现蓝牙设备', device.deviceId, device.name ?? device.localName, ab2hex(device.advertisData))
+      console.warn('[BLE] 发现蓝牙设备', device.deviceId, device.localName ?? device.name, ab2hex(device.advertisData))
       devices.value.set(device.deviceId, device)
       if (args?.deviceId && device.deviceId === args.deviceId) {
         uni.createBLEConnection({
@@ -115,6 +124,7 @@ export function useBle(args: { deviceId: string } | undefined) {
             console.error('[BLE] 连接蓝牙失败', err)
           },
           complete() {
+            // 链接设备成功后停止设备发现服务
             uni.stopBluetoothDevicesDiscovery({
               success() {
                 console.warn('[BLE] 停止扫描蓝牙')
@@ -138,29 +148,24 @@ export function useBle(args: { deviceId: string } | undefined) {
     console.warn('[BLE] 蓝牙特征值改变', res)
   })
 
-  function unlock() {
-    if (!bleState.isOpened || !bleState.isConnected || !args?.deviceId) {
-      console.error('[BLE] 蓝牙未打开或设备ID为空')
-      return
-    }
-    uni.writeBLECharacteristicValue({
-      deviceId: args.deviceId,
-      serviceId: BLE_CONSTS.SERVICE_UUID,
-      characteristicId: BLE_CONSTS.CHAR_WRITE_UUID,
-      value: new Uint8Array([BLE_CMD.UNLOCK]).buffer as any,
-      success() {
-        console.warn('[BLE] 发送指令成功')
-      },
-      fail(err) {
-        console.error('[BLE] 发送指令失败', err)
-      },
-    })
-  }
-
   return {
     bleState,
-    onStart,
     devices,
+    onStart,
     unlock,
   }
+  // #endif
+
+  // #ifndef MP-WEIXIN
+  return {
+    bleState,
+    devices,
+    onStart: () => {
+      console.error('[BLE] 当前平台不支持蓝牙')
+    },
+    unlock: () => {
+      console.error('[BLE] 当前平台不支持蓝牙')
+    },
+  }
+  // #endif
 }
