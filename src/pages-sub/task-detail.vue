@@ -53,11 +53,6 @@ onReachBottom(async () => {
 
 <template>
   <uni-nav-bar background-color="transparent" :border="false" status-bar fixed @click-left="navigateBack">
-    <!--    <view class=" flex flex-1 items-center justify-center pr-3"> -->
-    <!--      <text class="text-gray-900 text-lg text-center"> -->
-    <!--        {{ params?.title }} -->
-    <!--      </text> -->
-    <!--    </view> -->
     <template #left>
       <view class="i-lucide:chevron-left text-gray-900 size-7" />
     </template>

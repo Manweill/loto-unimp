@@ -5,7 +5,7 @@ function handleBack() {
 </script>
 
 <template>
-  <uni-nav-bar background-color="transparent" :border="false" status-bar @click-left="handleBack">
+  <uni-nav-bar background-color="transparent" :border="false" class=" w-full" status-bar @click-left="handleBack">
     <template #left>
       <view class="i-lucide:chevron-left text-gray-900 size-7" />
     </template>

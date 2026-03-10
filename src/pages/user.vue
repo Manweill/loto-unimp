@@ -6,7 +6,7 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 
 <template>
   <view class="fixed-gradient-bg" />
-  <view class="safe-area-tab-container justify-center h-80vh">
+  <view class="safe-area-tab-container justify-end  h-90vh">
     <view class="flex-col flex items-center justify-end flex-1">
       <view class="size-16 rounded-full bg-gray-200 justify-center items-center flex">
         <image v-if="avatarURL" :src="avatarURL" class="size-16 rounded-full" />
@@ -21,7 +21,7 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
         {{ account }}
       </text>
     </view>
-    <view class="gap-4 flex flex-col mt-4 flex-1">
+    <view class="gap-4 flex flex-col mt-4 flex-1 ">
       <view class="!rounded-xl px-1 overflow-hidden bg-gray-50 mx-4">
         <uni-list class="!bg-transparent">
           <uni-list-item class="!bg-transparent" show-arrow title="操作手册" />
@@ -31,7 +31,7 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
         </uni-list>
       </view>
       <view class="flex flex-1 flex-col items-center justify-end px-4 p-2">
-        <button plain :border="false" class="!mx-4 !bg-gray-100 !rounded-full !border-gray-100 w-full">
+        <button plain :border="false" class="!mx-4 !bg-gray-200 !rounded-full !border-gray-100 w-full">
           退出登录
         </button>
       </view>

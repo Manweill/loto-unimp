@@ -56,6 +56,10 @@ async function requestTasks() {
   state.value = tasks.value.length < 45 && tasks.value.length > 0 ? 'more' : 'noMore'
 }
 
+function onAdd() {
+  uni.navigateTo({ url: '/pages-sub/task-add' })
+}
+
 onMounted(() => {
 
 })
@@ -63,21 +67,21 @@ onMounted(() => {
 
 <template>
   <view class="fixed-gradient-bg" />
-  <uni-nav-bar background-color="transparent" class="bg-transparent" :border="false" status-bar />
+  <uni-nav-bar background-color="transparent" class="bg-transparent" :border="false" fixed status-bar />
   <view class="safe-area-tab-container flex flex-col pt-4">
     <view class="flex items-center justify-between px-4">
       <text class="text-xl">
         任务列表
       </text>
-      <button class="!bg-transparent !p-0 !m-0 text-base rounded-full" @click="console.log('1231231')">
+      <button class="!bg-transparent !p-0 !m-0 text-base rounded-full" @click="onAdd">
         <view class="i-lucide:circle-plus size-9 text-gray-50" />
       </button>
     </view>
-    <view class="w-80vw flex flex-col px-4">
+    <view class="w-80vw flex flex-col px-4 flex-1">
       <segmented-control
         v-model="current"
         :tabs="tabs"
-        class="mt-8 mx-3"
+        class="mt-8 mx-3 w-full"
       />
     </view>
     <view class="flex flex-col gap-4 my-4 !bg-transparent p-4">

@@ -22,7 +22,15 @@ export default defineUniPages({
           type: 'page',
         },
         {
+          path: 'device-add',
+          type: 'page',
+        },
+        {
           path: 'task-detail',
+          type: 'page',
+        },
+        {
+          path: 'task-add',
           type: 'page',
         },
       ],
